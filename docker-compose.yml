@@ -1,0 +1,64 @@
+version: "3.3"
+services:
+  fw:
+    image: bin/fw
+    build: ./fw
+    container_name: fw
+    networks:
+      extranet:
+        ipv4_address: 10.5.0.1
+      dmz:
+        ipv4_address: 10.5.1.1
+      intranet:
+        ipv4_address: 10.5.2.1
+    privileged: true
+  extranet:
+    image: bin/extranet
+    build: ./extranet
+    container_name: ext1
+    networks:
+      - extranet
+    depends_on:
+      - fw
+    privileged: true
+    tty: true
+  dmz:
+    image: bin/dmz
+    build: ./dmz
+    container_name: dmz1
+    networks:
+      - dmz
+    depends_on:
+      - fw
+    privileged: true
+    tty: true
+  intranet:
+    image: bin/intranet
+    build: ./intranet
+    networks:
+      - intranet
+    depends_on:
+      - fw
+    scale: 2
+    privileged: true
+    tty: true
+
+networks:
+  extranet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/24
+          gateway: 10.5.0.254
+  dmz:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.1.0/24
+          gateway: 10.5.1.254
+  intranet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.2.0/24
+          gateway: 10.5.2.254
