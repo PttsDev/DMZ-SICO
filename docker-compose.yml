@@ -5,11 +5,13 @@ services:
     build: ./fw
     container_name: fw
     networks:
-      extranet:
-        ipv4_address: 10.5.0.1
       dmz:
+        priority: 1000 #eth0
         ipv4_address: 10.5.1.1
-      intranet:
+      extranet:
+        priority: 900 #eth1
+        ipv4_address: 10.5.0.1
+      intranet: #eth2
         ipv4_address: 10.5.2.1
     privileged: true
   extranet:
@@ -23,6 +25,8 @@ services:
       - fw
     privileged: true
     tty: true
+    ports:
+      - "80:80"
   dmz:
     image: bin/dmz
     build: ./dmz

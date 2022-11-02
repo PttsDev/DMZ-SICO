@@ -22,4 +22,18 @@ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 # Permitir consultas entrantes del tipo ICMP ECHO REQUEST
 iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
+# Permitir trafico de conexiones establecidas o relacionadas par alos protocolos TCP, UDP e ICMP
+iptables -A FORWARD -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -p udp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Permitir tráfico que entre en fw a través de la interfaz de red interna y salga por la interfaz de red externa con protocolos TCP, UDP e ICMP
+EXTRANET_IF=eth1
+INTRANET_IF=eth2
+ACCEPTED_IP_RANGE="10.5.2.0/24"
+
+iptables -A FORWARD -i $INTRANET_IF -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -p tcp -j ACCEPT
+iptables -A FORWARD -i $INTRANET_IF -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -p udp -j ACCEPT
+iptables -A FORWARD -i $INTRANET_IF -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -p icmp -j ACCEPT
+
 /usr/sbin/sshd -D

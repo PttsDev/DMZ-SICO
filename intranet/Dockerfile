@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 RUN apt-get update
 RUN apt-get install -y openssh-server net-tools iputils-ping traceroute nano iptables iptables-dev pkg-config iproute2 tcpdump nmap
+RUN apt-get install -y curl
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
