@@ -36,4 +36,9 @@ iptables -A FORWARD -i $INTRANET_IF -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -p tcp
 iptables -A FORWARD -i $INTRANET_IF -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -p udp -j ACCEPT
 iptables -A FORWARD -i $INTRANET_IF -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -p icmp -j ACCEPT
 
+# Paquetes que abandonen la red interna y entren en la red externa deben cambiar la ip origen por la ip del fw en esa interfaz
+FW_EXTERNAL_IP="10.5.0.1"
+
+iptables -t nat -A POSTROUTING -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -j SNAT --to-source $FW_EXTERNAL_IP
+
 /usr/sbin/sshd -D
