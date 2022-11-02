@@ -33,14 +33,26 @@ services:
       - fw
     privileged: true
     tty: true
-  intranet:
+  intranet_1:
     image: bin/intranet
     build: ./intranet
+    container_name: int1
     networks:
-      - intranet
+      intranet:
+        ipv4_address: 10.5.2.20
     depends_on:
       - fw
-    scale: 2
+    privileged: true
+    tty: true
+  intranet_2:
+    image: bin/intranet
+    build: ./intranet
+    container_name: int2
+    networks:
+      intranet:
+        ipv4_address: 10.5.2.21
+    depends_on:
+      - fw
     privileged: true
     tty: true
 
