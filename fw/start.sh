@@ -41,4 +41,14 @@ FW_EXTERNAL_IP="10.5.0.1"
 
 iptables -t nat -A POSTROUTING -o $EXTRANET_IF -s $ACCEPTED_IP_RANGE -j SNAT --to-source $FW_EXTERNAL_IP
 
+# Configuraciones DMZ
+DMZ_IP="10.5.1.20"
+INT1_IP="10.5.2.20"
+
+# Acceso TCP desde cualquier maquina a la maquina de la DMZ, exclusivamente al servicio HTTP
+iptables -A FORWARD -p tcp -d $DMZ_IP --dport 80 -j ACCEPT
+
+# Acceso SSH desde int1 a la dmz
+iptables -A FORWARD -p tcp -s $INT1_IP -d $DMZ_IP --dport 22 -j ACCEPT
+
 /usr/sbin/sshd -D

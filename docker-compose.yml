@@ -25,14 +25,13 @@ services:
       - fw
     privileged: true
     tty: true
-    ports:
-      - "80:80"
   dmz:
     image: bin/dmz
     build: ./dmz
     container_name: dmz1
     networks:
-      - dmz
+      dmz:
+        ipv4_address: 10.5.1.20
     depends_on:
       - fw
     privileged: true
