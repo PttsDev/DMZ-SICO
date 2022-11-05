@@ -9,4 +9,28 @@ ip route replace default via 10.5.1.1 dev eth0
 # start apache default
 update-rc.d apache2 enable
 
+# Log file for fail2ban
+touch /var/log/auth.log
+
+# create a jail
+
+touch /etc/fail2ban/jail.local
+
+echo '[sshd]
+mode = aggresive
+enabled = true
+port = 2222
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+findtime = 300
+bantime = 3600
+ignoreip = 127.0.0.1' >/etc/fail2ban/jail.local
+
+# start fail2ban
+/etc/init.d/fail2ban start
+
+# start fail2ban default
+update-rc.d fail2ban enable
+
 /usr/sbin/sshd -D

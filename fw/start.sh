@@ -51,4 +51,7 @@ iptables -A FORWARD -p tcp -d $DMZ_IP --dport 80 -j ACCEPT
 # Acceso SSH desde int1 a la dmz
 iptables -A FORWARD -p tcp -s $INT1_IP -d $DMZ_IP --dport 22 -j ACCEPT
 
+#A.1. Acceso a SSH desde int1 a la dmz por puerto 2222
+iptables -A FORWARD -p tcp -s $INT1_IP -d $DMZ_IP --dport 2222 -j ACCEPT
+
 /usr/sbin/sshd -D
