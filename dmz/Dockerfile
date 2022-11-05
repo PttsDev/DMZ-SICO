@@ -5,7 +5,7 @@ RUN apt-get install -y curl apache2-utils tcpdump fail2ban
 RUN apt-get install -y libpam-google-authenticator
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+#RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 
 # A.1. 
 
@@ -39,6 +39,7 @@ COPY ./customMotd.txt /etc/motd
 
 # Authenticator google line to pam.d
 RUN echo "auth required pam_google_authenticator.so" >> /etc/pam.d/sshd
+RUN echo "auth required pam_permit.so" >> /etc/pam.d/sshd
 
 # Modify /etc/ssh/sshd_config – change ChallengeResponseAuthentication from no to yes
 RUN sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
