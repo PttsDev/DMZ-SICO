@@ -30,7 +30,7 @@ ignoreip = 127.0.0.1' >/etc/fail2ban/jail.local
 # start fail2ban
 /etc/init.d/fail2ban start
 
-# start fail2ban default
-update-rc.d fail2ban enable
+# modify index.html from apache
+echo '<html>\<Hola mundo desde la primera practica de Sistemas Confiables!". \</html>' >/var/www/html/index.html
 
 /usr/sbin/sshd -D
