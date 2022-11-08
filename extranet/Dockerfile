@@ -1,3 +1,14 @@
+#################################################################
+#                                                               #
+# Roberto Viejo López                                           #
+# SICO - Práctica configuración DMZ                             #
+#################################################################
+# Dockerfile para las maquinas de la red externa                #
+# que contiene su configuración inicial                         #
+#################################################################
+
+
+
 FROM ubuntu:18.04
 RUN apt-get update
 RUN apt-get install -y openssh-server net-tools iputils-ping traceroute nano iptables iptables-dev pkg-config iproute2 tcpdump nmap apache2 ufw

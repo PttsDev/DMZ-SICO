@@ -1,5 +1,14 @@
 #!/bin/bash
 
+#################################################################
+#                                                               #
+# Roberto Viejo López                                           #
+# SICO - Práctica configuración DMZ                             #
+#################################################################
+# Script para la maquina que ejerce de firewall                 #
+# sobre todo contiene reglas iptables                           #
+#################################################################
+
 # Replace the previous default gateway with this one
 # ip route replace default via ... dev eth0
 

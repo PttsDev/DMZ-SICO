@@ -1,5 +1,15 @@
 #!/bin/bash
 
+#################################################################
+#                                                               #
+# Roberto Viejo López                                           #
+# SICO - Práctica configuración DMZ                             #
+#################################################################
+# Script inicial para su ejecucion en la dmz                    #
+#                                                               #
+#################################################################
+
+
 # Replace the previous default gateway with this one
 ip route replace default via 10.5.1.1 dev eth0
 
